@@ -1,0 +1,19 @@
+{
+  "name": "bot_0xultravioleta",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/bot.js"
+  },
+  "keywords": [],
+  "author": "Daniel Loaiza",
+  "license": "ISC",
+  "description": "Farmeo de UVT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "node-schedule": "^2.1.1",
+    "tmi.js": "^1.8.5"
+  }
+}
