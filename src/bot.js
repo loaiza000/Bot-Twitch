@@ -37,18 +37,20 @@ client.on("message", (channel, tags, message, self) => {
   const triggerMessage =
     "0xultMuevalo Recogiendo direcciones de formato de ethereum pal airdrop en avalanche! escribe la tuya rrrrapidamente 0xultMuevalo";
 
-  console.log(`Usuario: ${tags.username.toLowerCase()}`);
+  console.log(`Usuario: ${tags.username}`);
   console.log(`Mensaje recibido: "${message}"`);
   console.log(`alreadyReplied: ${alreadyReplied}`);
 
   if (
-    tags.username.toLowerCase() === "0xultravioleta" &&
-    message === triggerMessage &&
+    tags.username === "0xultravioleta" &&
+    message.trim() === triggerMessage.trim() &&
     !alreadyReplied
   ) {
-    client.say(channel, `${process.env.WALLET_ADDRESS}`);
-    alreadyReplied = true;
-    console.log(`Respondí con la billetera: ${process.env.WALLET_ADDRESS}`);
+    setTimeout(() => {
+      client.say(channel, process.env.WALLET_ADDRESS);
+      console.log(`Respondí con la billetera: ${process.env.WALLET_ADDRESS}`);
+      alreadyReplied = true;
+    }, 1000);
   }
 
   if (message === "!test" && tags.username.toLowerCase() === "0xultravioleta") {
@@ -59,14 +61,18 @@ client.on("message", (channel, tags, message, self) => {
 
 schedule.scheduleJob({ hour: 10, minute: 0, tz: "America/Bogota" }, () => {
   alreadyReplied = false;
-  client.connect()
-    .then(() => console.log(`Bot reconectado a ${process.env.TWITCH_CHANNEL} a las 10 AM`))
+  client
+    .connect()
+    .then(() =>
+      console.log(`Bot reconectado a ${process.env.TWITCH_CHANNEL} a las 10 AM`)
+    )
     .catch((err) => console.error("Error al reconectar:", err));
   console.log("El bot ha sido activado (10 AM - 6 PM)");
 });
 
 schedule.scheduleJob({ hour: 18, minute: 0, tz: "America/Bogota" }, () => {
-  client.disconnect()
+  client
+    .disconnect()
     .then(() => console.log("Bot desconectado a las 6 PM"))
     .catch((err) => console.error("Error al desconectar:", err));
   console.log("El bot ha sido desactivado (fuera del horario)");
